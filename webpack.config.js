@@ -12,32 +12,58 @@
 //style-loader will dump file into dom and css-loader  will compile each css code
 //sass-loader 类似 babel-loader ， node-sass类似babel-core
 const path = require('path');
-module.exports ={
-  entry:"./src/app.js",
-  output:{
-    path:path.join(__dirname,'public'),
-    filename:'bundle.js'
-  },
-  module:{
-    rules:[{
-      loader:'babel-loader',
-      test:/\.js$/,
-      exclude:/node_modules/
-    },{
-      test:/\.s?css$/,
-      use:['style-loader',
-           'css-loader',
-          'sass-loader']
-    }]
-  },
-  devtool:'cheap-module-eval-source-map',
-  devServer:{
-    contentBase:path.join(__dirname,'public'),
-    historyApiFallback:true
-  }
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+module.exports = (env) => {
+  const isProduction = env === 'production';
+  const CSSExtract = new ExtractTextPlugin('styles.css');
+
+  return {
+    entry: './src/app.js',
+    output: {
+      path: path.join(__dirname, 'public'),
+      filename: 'bundle.js'
+    },
+    module: {
+      rules: [{
+        loader: 'babel-loader',
+        test: /\.js$/,
+        exclude: /node_modules/
+      }, {
+        test: /\.s?css$/,
+        use: CSSExtract.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
+      }]
+    },
+    plugins: [
+      CSSExtract
+    ],
+    devtool: isProduction ? 'source-map' : 'inline-source-map',
+    devServer: {
+      contentBase: path.join(__dirname, 'public'),
+      historyApiFallback: true
+    }
+  };
 };
 
 
+// ['style-loader',
+//      'css-loader',
+//     'sass-loader']
 //一些有个webpack就删掉的scripts
 // "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
 // },
