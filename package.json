@@ -9,8 +9,11 @@
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "start": "node server/server.js",
-    "heroku-postbuild": "run build:prod",
+    "heroku-postbuild": "npm run build:prod",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "10.16.0"
   },
   "author": "Xuefeng Qin",
   "license": "ISC",
