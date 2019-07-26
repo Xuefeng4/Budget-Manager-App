@@ -9,15 +9,37 @@ import { addExpense,removeExpense,editExpense } from './actions/expenses.js';
 import { setFilterText,sortByDate,sortByAmount,setStartDate,setEndDate } from './actions/filters.js'
 import getVisibleExpenses from './selectors/expenses.js'
 
+// const store = configureStore();
+//
+// store.dispatch(addExpense({description:'name',amount:444}))
+//
+// const jsx = (
+//   <Provider store = {store}>
+//     <Router />
+//   </Provider>
+//
+// );
+// ReactDOM.render(jsx, document.getElementById('app'));
+
+
 const store = configureStore();
 
+store.dispatch(addExpense({ description: 'Water bill', amount: 4500 }));
+store.dispatch(addExpense({ description: 'Gas bill', createdAt: 1000 }));
+store.dispatch(addExpense({ description: 'Rent', amount: 109500 }));
+
+const state = store.getState();
+const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+console.log(visibleExpenses);
+
 const jsx = (
-  <Provider store = {store}>
+  <Provider store={store}>
     <Router />
   </Provider>
-
 );
+
 ReactDOM.render(jsx, document.getElementById('app'));
+
 // const p = document.querySelector('p');
 // p.remove();
 
