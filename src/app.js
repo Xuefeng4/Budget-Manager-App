@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import './styles/styles.scss';
 import 'normalize.css/normalize.css';//used to reset the overide the difference between different browser
 import configureStore from './store/store.js';
-import { addExpense,removeExpense,editExpense } from './actions/expenses.js';
+import { startAddExpense,startSetExpenses } from './actions/expenses.js';
 import { setFilterText,sortByDate,sortByAmount,setStartDate,setEndDate } from './actions/filters.js'
 import getVisibleExpenses from './selectors/expenses.js'
-
+import './firebase/firebase.js'
 // const store = configureStore();
 //
 // store.dispatch(addExpense({description:'name',amount:444}))
@@ -23,14 +23,14 @@ import getVisibleExpenses from './selectors/expenses.js'
 
 
 const store = configureStore();
-
-store.dispatch(addExpense({ description: 'Water bill', amount: 4500 }));
-store.dispatch(addExpense({ description: 'Gas bill', createdAt: 1000 }));
-store.dispatch(addExpense({ description: 'Rent', amount: 109500 }));
-
-const state = store.getState();
-const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
-console.log(visibleExpenses);
+//
+// store.dispatch(addExpense({ description: 'Water bill', amount: 4500 }));
+// store.dispatch(addExpense({ description: 'Gas bill', createdAt: 1000 }));
+// store.dispatch(addExpense({ description: 'Rent', amount: 109500 }));
+//
+// const state = store.getState();
+// const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+// console.log(visibleExpenses);
 
 const jsx = (
   <Provider store={store}>
@@ -38,7 +38,12 @@ const jsx = (
   </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById('app'));
+
+ReactDOM.render(<p>Loading</p>, document.getElementById('app'));
+
+store.dispatch(startSetExpenses()).then(()=>{
+  ReactDOM.render(jsx, document.getElementById('app'));
+})
 
 // const p = document.querySelector('p');
 // p.remove();
