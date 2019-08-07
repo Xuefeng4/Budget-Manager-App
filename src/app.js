@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from './router/Router.js'
+import Router, {history} from './router/Router.js'
 import { Provider } from 'react-redux';
 import './styles/styles.scss';
 import 'normalize.css/normalize.css';//used to reset the overide the difference between different browser
 import configureStore from './store/store.js';
 import { startAddExpense,startSetExpenses } from './actions/expenses.js';
 import { setFilterText,sortByDate,sortByAmount,setStartDate,setEndDate } from './actions/filters.js'
+import { login, logout } from './actions/auth.js';
 import getVisibleExpenses from './selectors/expenses.js'
-import './firebase/firebase.js'
+import {firebase} from './firebase/firebase.js'
 // const store = configureStore();
 //
 // store.dispatch(addExpense({description:'name',amount:444}))
@@ -38,12 +39,31 @@ const jsx = (
   </Provider>
 );
 
-
+let hasRendered = false;
+const renderApp = ()=>{
+  if(!hasRendered){
+    ReactDOM.render(jsx, document.getElementById('app'));
+    hasRendered = true
+  }
+}
 ReactDOM.render(<p>Loading</p>, document.getElementById('app'));
 
-store.dispatch(startSetExpenses()).then(()=>{
-  ReactDOM.render(jsx, document.getElementById('app'));
+firebase.auth().onAuthStateChanged((user)=>{
+  if(user){
+    store.dispatch(login(user.uid))
+    store.dispatch(startSetExpenses()).then(()=>{
+    renderApp();
+    if(history.location.pathname === '/'){
+      history.push('/dashboard')
+    }
+    })
+  }else{
+    store.dispatch(logout())
+    renderApp()
+    history.push('/');
+  }
 })
+//this will run callback after the auth state change like log in and log out
 
 // const p = document.querySelector('p');
 // p.remove();

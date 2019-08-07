@@ -4,23 +4,27 @@ import EditExpense from '../components/EditExpense.js'
 import Help from '../components/Help.js'
 import NotFound from '../components/NotFound.js'
 import Dashboard from '../components/Dashboard.js'
-import Header from '../components/Header.js'
-import {Switch, BrowserRouter, Route,Link,NavLink} from 'react-router-dom';
+// import Header from '../components/Header.js'
+import {Switch, Router, Route,Link,NavLink} from 'react-router-dom';
+import Login from '../components/Login.js'
+import createHistory from 'history/createBrowserHistory'
+import PrivateRoute from './PrivateRoute';
 
-const Router = ()=>(
-  <BrowserRouter>
+export const history = createHistory();
+const AppRouter = ()=>(
+  <Router history = {history}>
     <div>
-      <Header />
       <Switch>
-        <Route path = '/' component = {Dashboard} exact = {true}/>
-        <Route path = '/create' component = {AddExpense} />
-        <Route path = '/edit/:id' component = {EditExpense} />
+        <Route path = '/' component = {Login} exact = {true} />
+        <PrivateRoute path = '/dashboard' component = {Dashboard} />
+        <PrivateRoute path = '/create' component = {AddExpense} />
+        <PrivateRoute path = '/edit/:id' component = {EditExpense} />
         <Route path = '/help' component = {Help} />
         <Route component = {NotFound} />
       </Switch>
     </div>
-  </BrowserRouter>
+  </Router>
 );
-
-export default Router;
+//<BrowserRouter> is auto with browser history using router can add history by self
+export default AppRouter;
 //dynamic match
