@@ -9,15 +9,15 @@
 }
 
 .box-layout__box{
-  background:fade-out(green,.85);
+  background:fade-out(green,.50);
   border-radius:3px;
   padding:$l-size $l-size;
   text-align:center;
-  width:25rem;
+  width:30rem;
 }
 
 .box-layout__title{
   white-space: nowrap;
-  margin: 0 0 $m-size 0;
+  margin:0 0 $m-size 0;
   line-height:1;
 }
