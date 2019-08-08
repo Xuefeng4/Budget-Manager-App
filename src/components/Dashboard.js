@@ -5,7 +5,6 @@ import ExpensesTotal from './ExpensesTotal.js'
 
 const Dashboard =()=>(
   <div>
-  This is from my Dashboard component
   <ExpensesTotal />
   <ExpensesListFilters />
   <ExpensesList />

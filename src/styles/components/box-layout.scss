@@ -1,0 +1,23 @@
+.box-layout{
+  background:url('/images/money-heart.jpg'); //this is not the entire directory because
+  background-size:cover;
+  height:100vh;
+  width:100vw;
+  display:flex;
+  justify-content:center;
+  align-items: center;                                   // this is running browser and it only have accsess to public
+}
+
+.box-layout__box{
+  background:fade-out(green,.85);
+  border-radius:3px;
+  padding:$l-size $l-size;
+  text-align:center;
+  width:25rem;
+}
+
+.box-layout__title{
+  white-space: nowrap;
+  margin: 0 0 $m-size 0;
+  line-height:1;
+}

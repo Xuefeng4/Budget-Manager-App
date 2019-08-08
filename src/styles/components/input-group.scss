@@ -1,0 +1,18 @@
+.input-group{
+  display:flex;
+  // flex-direction:row;
+  margin-bottom: $l-size;
+  // justify-content: center;
+  // align-items: center;
+  @media(max-width:$desktop-breakpoint){
+    flex-direction: column;
+    margin-bottom: $m-size;
+  }
+}
+
+.input-group__item{
+  margin-right:$m-size;
+  @media(max-width:$desktop-breakpoint){
+    margin: 0 0 $m-size 0;
+  }
+}

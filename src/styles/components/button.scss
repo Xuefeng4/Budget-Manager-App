@@ -1,0 +1,19 @@
+.button{
+  display:inline-block;
+  background:$list-color;
+  border:none; //or norder:0
+  color:white;
+  padding:$s-size;
+  // font-weight:300;
+  font-size:2.2rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.modified--button{
+  background: none;
+}
+
+.button--sencondary{
+  background:#888;
+}

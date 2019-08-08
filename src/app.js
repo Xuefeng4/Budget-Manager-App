@@ -10,6 +10,7 @@ import { setFilterText,sortByDate,sortByAmount,setStartDate,setEndDate } from '.
 import { login, logout } from './actions/auth.js';
 import getVisibleExpenses from './selectors/expenses.js'
 import {firebase} from './firebase/firebase.js'
+import Loading from './components/Loading'
 // const store = configureStore();
 //
 // store.dispatch(addExpense({description:'name',amount:444}))
@@ -46,7 +47,7 @@ const renderApp = ()=>{
     hasRendered = true
   }
 }
-ReactDOM.render(<p>Loading</p>, document.getElementById('app'));
+ReactDOM.render(<Loading />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user)=>{
   if(user){
